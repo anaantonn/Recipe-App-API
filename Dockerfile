@@ -25,10 +25,10 @@ RUN python -m venv /py && \
         --disabled-password \
         --no-create-home \
         django-user && \
-    mkdir -p /vol/web/media && \
-    mkdir -p /vol/web/static && \
-    chown -R django-user:django-user /vol && \
-    chmod -R 755 /vol
+    sudo mkdir -p /vol/web/media && \
+    sudo mkdir -p /vol/web/static && \
+    sudo chown -R django-user:django-user /vol && \
+    sudo chmod -R 755 /vol
 
 ENV PATH="/py/bin:$PATH"
 
