@@ -15,6 +15,12 @@ jobs:
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
             - name: Checkout
               uses: actions/checkout@v2
+            # Ensure /vol/web/media exists and has correct permissions
+            - name: Ensure media directory exists
+              run: docker compose run --rm app sh -c "mkdir -p /vol/web/media/uploads/recipe && chmod -R 777 /vol/web/media"
+            # Fix ownership issues
+            - name: Fix ownership for media directory
+              run: docker compose run --rm app sh -c "chown -R django-user:django-user /vol/web/media"
             - name: Test
               run: docker compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
             - name: Lint
